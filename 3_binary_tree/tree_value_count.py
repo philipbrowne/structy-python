@@ -8,22 +8,11 @@ class Node:
         self.right = None
 
 
-def tree_value_count(root, target):  # DF Recursive
+def tree_value_count(root, target): # Depth First Iterative
+    if root is None:
+        return 0
     count = 0
-    if root is None:
-        return 0
-    if root.val == target:
-        count += 1
-    left_count = tree_value_count(root.left, target)
-    right_count = tree_value_count(root.right, target)
-    return count + left_count + right_count
-
-
-def tree_value_count(root, target):  # DF Iterative
-    if root is None:
-        return 0
     stack = [root]
-    count = 0
     while stack:
         node = stack.pop()
         if node.val == target:
@@ -34,12 +23,21 @@ def tree_value_count(root, target):  # DF Iterative
             stack.append(node.left)
     return count
 
-
-def tree_value_count(root, target):  # BF Iterative
+def tree_value_count(root, target): # Depth First Recursive
     if root is None:
         return 0
-    queue = deque([root])
     count = 0
+    if root.val == target:
+        count += 1
+    count_left = tree_value_count(root.left, target)
+    count_right = tree_value_count(root.right, target)
+    return count + count_left + count_right
+
+def tree_value_count(root, target): # Breadth First
+    if root is None:
+        return 0
+    count = 0
+    queue = deque([root])
     while queue:
         current = queue.popleft()
         if current.val == target:
